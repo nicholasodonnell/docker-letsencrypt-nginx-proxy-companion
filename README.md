@@ -91,9 +91,7 @@ If the proxyed container listen on and expose another port other than the defaul
 
 ## Credits
 
-Without the repositories below this collection wouldn't be possible.
+Without the authors below this collection wouldn't be possible. Credits goes to:
 
-Credits goes to:
-
-* [@jwilder](https://github.com/jwilder).
-* [@JrCs](https://github.com/JrCs).
+* [@jwilder](https://github.com/jwilder)
+* [@JrCs](https://github.com/JrCs)
