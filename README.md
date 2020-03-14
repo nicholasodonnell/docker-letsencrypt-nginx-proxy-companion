@@ -10,9 +10,9 @@
 
 ### Services
 
-- **[nginx-gen](https://github.com/jwilder/docker-gen)** - File generator that renders templates using docker container meta-data.
-- **[nginx-letsencrypt](https://github.com/nginx-proxy/docker-letsencrypt-nginx-proxy-companion)** - Lets Encrypt companion container for nginx.
-- **[nginx-web](https://hub.docker.com/_/nginx)** - Web server.
+- [nginx-gen](https://github.com/jwilder/docker-gen) - File generator that renders templates using docker container meta-data.
+- [nginx-letsencrypt](https://github.com/nginx-proxy/docker-letsencrypt-nginx-proxy-companion) - Lets Encrypt companion container for nginx.
+- [nginx-web](https://hub.docker.com/_/nginx) - Web server.
 
 ## Installation
 
@@ -89,14 +89,11 @@ Once this collection is running, start any container you want proxyed with envir
 
 If the proxyed container listen on and expose another port other than the default `80`, you can force NGINX to use this port with the `VIRTUAL_PORT` environment variable.
 
-:exclamation: You don´t need to open port `443` in your container, the certificate validation is managed by the web proxy.
-
 ## Credits
 
 Without the repositories below this collection wouldn't be possible.
 
 Credits goes to:
 
-* nginx-proxy @jwilder
-* docker-gen @jwilder
-* docker-letsencrypt-nginx-proxy-companion @JrCs
+* [@jwilder](https://github.com/jwilder).
+* [@JrCs](https://github.com/JrCs).
