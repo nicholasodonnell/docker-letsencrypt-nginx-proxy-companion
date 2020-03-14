@@ -4,3 +4,7 @@ Thumbs.db
 
 # docker
 .env
+
+# nginx
+**/nginx-data/*
+!**/nginx-data/.gitkeep
