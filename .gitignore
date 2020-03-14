@@ -6,5 +6,13 @@ Thumbs.db
 .env
 
 # nginx
-**/nginx-data/*
-!**/nginx-data/.gitkeep
+nginx-data/certs/*
+!nginx-data/certs/.gitkeep
+nginx-data/conf.d/*
+!nginx-data/conf.d/.gitkeep
+nginx-data/html/*
+!nginx-data/html/.gitkeep
+nginx-data/htpasswd/*
+!nginx-data/htpasswd/.gitkeep
+nginx-data/vhost.d/*
+!nginx-data/vhost.d/.gitkeep
