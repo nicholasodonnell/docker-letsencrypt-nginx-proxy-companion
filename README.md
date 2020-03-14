@@ -11,8 +11,8 @@
 ### Services
 
 - [nginx-gen](https://github.com/jwilder/docker-gen) - File generator that renders templates using docker container meta-data.
-- [nginx-letsencrypt](https://github.com/nginx-proxy/docker-letsencrypt-nginx-proxy-companion) - Lets Encrypt companion container for nginx.
-- [nginx-web](https://hub.docker.com/_/nginx) - Web server.
+- [nginx-letsencrypt](https://github.com/nginx-proxy/docker-letsencrypt-nginx-proxy-companion) - Lets Encrypt companion container for NGINX.
+- [nginx-web](https://hub.docker.com/_/nginx) - Reverse proxy server for HTTP & HTTPS.
 
 ## Installation
 
