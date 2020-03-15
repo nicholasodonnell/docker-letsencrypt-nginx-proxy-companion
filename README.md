@@ -43,6 +43,12 @@ To restart a service:
 make restart service="<service>"
 ```
 
+To restart NGINX (to apply any changes with no downtime):
+
+```
+make restart-nginx
+```
+
 To stop a service:
 
 ```
@@ -67,27 +73,46 @@ To remove any images & containers (will require another `make build`):
 make clean
 ```
 
+To list running services:
+
+```
+make ps
+```
+
 ## ENV Options
-| Option                    | Description                                                                                                   |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| `PROJECT_NAME`            | The docker compose project name. Will be used as a prefix for all containers.                                 |
-| `NGINX_DATA_PATH`         | NGINX files path. Here you can configure the path where NGINX stores all the configurations and certificates. |
-| `DOCKER_SOCKET_PATH`      | The host docker socket path.                                                                                  |
-| `NETWORK`                 | The name of the docker network for proxying.                                                                  |
-| `NETWORK_OPTIONS`         | Docker network options when creating the network.                                                             |
-| `NGINX_GEN_SSL_POLICY`    | The SSL policy. See available options here: https://github.com/jwilder/nginx-proxy#how-ssl-support-works.     |
-| `NGINX_LETSENCRYPT_EMAIL` | Email so that Let's Encrypt can warn you about expiring certificates and allow you to recover your account.   |
-| `NGINX_WEB_HTTP_PORT`     | Locally exposed ports for http on the Host.                                                                   |
-| `NGINX_WEB_HTTPS_PORT`    | Locally exposed ports for https on the Host.                                                                  |
+| Option                     | Description                                                                                                   |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `PROJECT_NAME`             | The docker compose project name. Will be used as a prefix for all containers.                                 |
+| `NGINX_DATA_PATH`          | NGINX files path. Here you can configure the path where NGINX stores all the configurations and certificates. |
+| `DOCKER_SOCKET_PATH`       | The host docker socket path.                                                                                  |
+| `EXTERNAL_NETWORK`         | Name of the external docker network for proxying.                                                             |
+| `EXTERNAL_NETWORK_OPTIONS` | Docker network options when creating the external network.                                                    |
+| `NGINX_GEN_SSL_POLICY`     | The SSL policy. See available options here: https://github.com/jwilder/nginx-proxy#how-ssl-support-works.     |
+| `NGINX_LETSENCRYPT_EMAIL`  | Email so that Let's Encrypt can warn you about expiring certificates and allow you to recover your account.   |
+| `NGINX_WEB_HTTP_PORT`      | Locally exposed ports for http on the Host.                                                                   |
+| `NGINX_WEB_HTTPS_PORT`     | Locally exposed ports for https on the Host.                                                                  |
 
 ## Proxying Docker Containers
 
-After following the steps above you can create new docker web containers that will automatically forward any connections over SSL.
+After following the steps above you can create new docker containers **attached to the external network** that will automatically proxy any connections over SSL.
 
-Once this collection is running, start any container you want proxyed with environment variables `VIRTUAL_HOST` and `LETSENCRYPT_HOST` both set to the domain(s) your proxyed container is going to use.
-`VIRTUAL_HOST` controls proxying by NGINX and `LETSENCRYPT_HOST` controls certificate creation by LetsEncrypt.
+Once this collection is running, simply start any container you want proxyed with environment variables `VIRTUAL_HOST` and `LETSENCRYPT_HOST` both set to the domain(s) your proxyed container is going to use.
+> `VIRTUAL_HOST` controls proxying by nginx-web and `LETSENCRYPT_HOST` control certificate creation and SSL enabling by nginx-letsencrypt.
 
 If the proxyed container listen on and expose another port other than the default `80`, you can force NGINX to use this port with the `VIRTUAL_PORT` environment variable.
+
+:grey_exclamation: Certificates will only be issued for containers that have both `VIRTUAL_HOST` and `LETSENCRYPT_HOST` variables set to domain(s) that correctly resolve to the host, provided the host is publicly reachable.
+
+#### Example
+```bash
+docker run \
+  --name your-proxyed-app \
+  --network=webproxy \ # EXTERNAL_NETWORK var
+  --env "LETSENCRYPT_HOST=subdomain.yourdomain.tld" \
+  --env "VIRTUAL_HOST=subdomain.yourdomain.tld" \
+  --env "VIRTUAL_PORT=8080" \
+  image
+```
 
 ## Credits
 

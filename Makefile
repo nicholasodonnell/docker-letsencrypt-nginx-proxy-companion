@@ -1,12 +1,18 @@
 include .env
 
 SHELL := /bin/bash
-DOCKER_COMPOSE_FILE := docker-compose.yml
+DOCKER_COMPOSE_NETWORKS_FILE := docker-compose.networks.yml
+DOCKER_COMPOSE_NGINX_GEN_FILE := ./nginx-gen/docker-compose.nginx-gen.yml
+DOCKER_COMPOSE_NGINX_LETSENCRYPT_FILE := ./nginx-letsencrypt/docker-compose.nginx-letsencrypt.yml
+DOCKER_COMPOSE_NGINX_WEB_FILE := ./nginx-web/docker-compose.nginx-web.yml
 PROJECT_DIRECTORY := $(shell pwd)
 PROJECT_NAME := $(if $(PROJECT_NAME),$(PROJECT_NAME),docker-letsencrypt-nginx-proxy-companion)
 
 define DOCKER_COMPOSE_ARGS
-	--file ${DOCKER_COMPOSE_FILE} \
+	--file ${DOCKER_COMPOSE_NETWORKS_FILE} \
+	--file ${DOCKER_COMPOSE_NGINX_GEN_FILE} \
+	--file ${DOCKER_COMPOSE_NGINX_LETSENCRYPT_FILE} \
+	--file ${DOCKER_COMPOSE_NGINX_WEB_FILE} \
 	--log-level ERROR \
 	--project-directory $(PROJECT_DIRECTORY) \
 	--project-name $(PROJECT_NAME)
@@ -48,8 +54,12 @@ else
 			$(service) > $(file)
 endif
 
-network: ## create network
-	docker network create $(NETWORK) $(NETWORK_OPTIONS)
+network: ## create external network
+	docker network create $(EXTERNAL_NETWORK) $(EXTERNAL_NETWORK_OPTIONS)
+
+ps: ## lists running services
+	@docker ps \
+		--format {{.Names}}
 
 pull: ## pull images
 	@docker-compose ${DOCKER_COMPOSE_ARGS} \
@@ -58,13 +68,19 @@ pull: ## pull images
 
 restart: ## restart a service
 	@docker-compose ${DOCKER_COMPOSE_ARGS} \
-	restart \
-		$(service)
+		restart \
+			$(service)
+
+restart-nginx: ## restart nginx
+	@docker-compose ${DOCKER_COMPOSE_ARGS} \
+		exec \
+			nginx-web \
+				nginx -s reload
 
 stop: ## stop a service
 	@docker-compose ${DOCKER_COMPOSE_ARGS} \
-	stop \
-		$(service)
+		stop \
+			$(service)
 
 up: ## bring up
 ifndef service
@@ -86,7 +102,9 @@ endif
 	down \
 	exec \
 	logs \
+	ps \
 	pull \
 	restart \
+	restart-nginx \
 	stop \
 	up

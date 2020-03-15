@@ -1,0 +1,10 @@
+version: "3.5"
+
+networks:
+  docker-letsencrypt-nginx-proxy-companion:
+    driver: bridge
+    name: docker-letsencrypt-nginx-proxy-companion
+
+  external-network:
+    external:
+      name: ${EXTERNAL_NETWORK}

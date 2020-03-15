@@ -1,0 +1,20 @@
+version: "3.5"
+services:
+  nginx-gen:
+    command: -notify-sighup ${PROJECT_NAME}-nginx-gen -watch -wait 5s:30s /etc/docker-gen/templates/nginx.tmpl /etc/nginx/conf.d/default.conf
+    container_name: ${PROJECT_NAME}-nginx-gen
+    environment:
+      - SSL_POLICY=${NGINX_GEN_SSL_POLICY}
+    image: jwilder/docker-gen
+    networks:
+      - docker-letsencrypt-nginx-proxy-companion
+      - external-network
+    restart: unless-stopped
+    volumes:
+      - ${DOCKER_SOCKET_PATH}:/tmp/docker.sock:ro
+      - ${NGINX_DATA_PATH}/certs:/etc/nginx/certs:ro
+      - ${NGINX_DATA_PATH}/conf.d:/etc/nginx/conf.d
+      - ${NGINX_DATA_PATH}/html:/usr/share/nginx/html
+      - ${NGINX_DATA_PATH}/htpasswd:/etc/nginx/htpasswd:ro
+      - ${NGINX_DATA_PATH}/nginx.tmpl:/etc/docker-gen/templates/nginx.tmpl:ro
+      - ${NGINX_DATA_PATH}/vhost.d:/etc/nginx/vhost.d
