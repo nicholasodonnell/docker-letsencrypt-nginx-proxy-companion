@@ -89,8 +89,8 @@ make ps
 | `EXTERNAL_NETWORK_OPTIONS` | Docker network options when creating the external network.                                                    |
 | `NGINX_GEN_SSL_POLICY`     | The SSL policy. See available options here: https://github.com/jwilder/nginx-proxy#how-ssl-support-works.     |
 | `NGINX_LETSENCRYPT_EMAIL`  | Email so that Let's Encrypt can warn you about expiring certificates and allow you to recover your account.   |
-| `NGINX_WEB_HTTP_PORT`      | Locally exposed ports for http on the host.                                                                   |
-| `NGINX_WEB_HTTPS_PORT`     | Locally exposed ports for https on the host.                                                                  |
+| `NGINX_WEB_HTTP_PORT`      | Locally exposed ports for HTTP on the host.                                                                   |
+| `NGINX_WEB_HTTPS_PORT`     | Locally exposed ports for HTTPS on the host.                                                                  |
 
 ## Proxying Docker Containers
 
