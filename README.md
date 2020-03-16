@@ -106,12 +106,12 @@ If the proxyed container listen on and exposes another port other than the defau
 #### Examples
 ```
 docker run \
-  --expose=8080 \
-  --name your-proxyed-app \
-  --network=webproxy \
   --env "LETSENCRYPT_HOST=subdomain.yourdomain.tld" \
   --env "VIRTUAL_HOST=subdomain.yourdomain.tld" \
   --env "VIRTUAL_PORT=8080" \
+  --expose=8080 \
+  --name your-proxyed-app \
+  --network=webproxy \
   node
 ```
 
@@ -124,11 +124,11 @@ services:
       - LETSENCRYPT_HOST=subdomain.yourdomain.tld
       - VIRTUAL_HOST=subdomain.yourdomain.tld
       - VIRTUAL_PORT=8080
+    expose:
+      - 8080
     image: node
     networks:
       - webproxy
-    ports:
-      - 8080
 ```
 
 ## Credits
