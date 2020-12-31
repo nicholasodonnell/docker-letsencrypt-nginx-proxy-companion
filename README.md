@@ -82,7 +82,7 @@ make ps
 ## ENV Options
 | Option                     | Description                                                                                                   |
 | -------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| `PROJECT_NAME`             | The docker compose project name. Will be used as a prefix for all containers.                                 |
+| `PROJECT_NAME`             | The docker compose project name.                                                                              |
 | `NGINX_DATA_PATH`          | NGINX files path. Here you can configure the path where NGINX stores all the configurations and certificates. |
 | `DOCKER_SOCKET_PATH`       | The host docker socket path.                                                                                  |
 | `EXTERNAL_NETWORK`         | Name of the external docker network for proxying.                                                             |
