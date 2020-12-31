@@ -16,7 +16,7 @@
 
 ## Installation
 
-1. Create a `.env` file using [`.env.example`](.env.example) as a reference.
+1. Create a `.env` file using [`.env.example`](.env.example) as a reference: cp -n .env{.example,}.
 2. Pull the required docker images by running `make pull`.
 
 ## Setup

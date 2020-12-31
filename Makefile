@@ -1,18 +1,10 @@
 include .env
 
 SHELL := /bin/bash
-DOCKER_COMPOSE_NETWORKS_FILE := docker-compose.networks.yml
-DOCKER_COMPOSE_NGINX_GEN_FILE := ./nginx-gen/docker-compose.nginx-gen.yml
-DOCKER_COMPOSE_NGINX_LETSENCRYPT_FILE := ./nginx-letsencrypt/docker-compose.nginx-letsencrypt.yml
-DOCKER_COMPOSE_NGINX_WEB_FILE := ./nginx-web/docker-compose.nginx-web.yml
 PROJECT_DIRECTORY := $(shell pwd)
 PROJECT_NAME := $(if $(PROJECT_NAME),$(PROJECT_NAME),docker-letsencrypt-nginx-proxy-companion)
 
 define DOCKER_COMPOSE_ARGS
-	--file ${DOCKER_COMPOSE_NETWORKS_FILE} \
-	--file ${DOCKER_COMPOSE_NGINX_GEN_FILE} \
-	--file ${DOCKER_COMPOSE_NGINX_LETSENCRYPT_FILE} \
-	--file ${DOCKER_COMPOSE_NGINX_WEB_FILE} \
 	--log-level ERROR \
 	--project-directory $(PROJECT_DIRECTORY) \
 	--project-name $(PROJECT_NAME)
