@@ -141,8 +141,8 @@ The following environment variables can be used for more advanced usage:
 
 | Variable                  | Description                                                                                                                            |
 | ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| `HTTPS_METHOD=noredirect` | Disable automatic redirect to SSL.                                                                                                     |
-| `HTTPS_METHOD=noredirect` | Disable the non-SSL site entirely.                                                                                                     |
+| `HTTPS_METHOD=noredirect` | Disable the automatic redirect to the SSL site.                                                                                        |
+| `HTTPS_METHOD=nohttps`    | Disable the non-SSL site entirely.                                                                                                     |
 | `HSTS=...`                | Customize the [Strict-Transport-Security](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security) header. |
 | `HSTS=off`                | Disable the [Strict-Transport-Security](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security) header.   |
 
