@@ -16,7 +16,7 @@
 
 ## Installation
 
-1. Create a `.env` file using [`.env.example`](.env.example) as a reference: cp -n .env{.example,}.
+1. Create a `.env` file using [`.env.example`](.env.example) as a reference: `cp -n .env{.example,}`.
 2. Pull the required docker images by running `make pull`.
 
 ## Setup
@@ -80,6 +80,7 @@ make ps
 ```
 
 ## ENV Options
+
 | Option                     | Description                                                                                                   |
 | -------------------------- | ------------------------------------------------------------------------------------------------------------- |
 | `PROJECT_NAME`             | The docker compose project name.                                                                              |
@@ -94,16 +95,19 @@ make ps
 
 ## Proxying Docker Containers
 
-After following the steps above you can create new docker containers **attached to the external network** that will automatically proxy any connections over SSL.
+After following the steps above you can create new docker containers that will automatically proxy any connections over SSL.
+
 > External containers must be attached to the external network defined in your `EXTERNAL_NETWORK` variable in order to resolve properly.
 
 Once this collection is running, simply start a container you want proxyed with environment variables `VIRTUAL_HOST` and `LETSENCRYPT_HOST` both set to the domain(s) your proxyed container is going to use.
+
 > `VIRTUAL_HOST` controls proxying by nginx-web and `LETSENCRYPT_HOST` control certificate creation and SSL enabling by nginx-letsencrypt.
 > Certificates will only be issued for containers that have both `VIRTUAL_HOST` and `LETSENCRYPT_HOST` variables set to the domain(s) that correctly resolve to the host, provided the host is publicly reachable.
 
 If the proxyed container listen on and exposes another port other than the default `80`, you can force NGINX to use this port with the `VIRTUAL_PORT` environment variable.
 
 #### Examples
+
 ```
 docker run \
   --env "LETSENCRYPT_HOST=subdomain.yourdomain.tld" \
@@ -131,9 +135,20 @@ services:
       - webproxy
 ```
 
+## Advanced Usage
+
+The following environment variables can be used for more advanced usage:
+
+| Variable                  | Description                                                                                                                            |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `HTTPS_METHOD=noredirect` | Disable automatic redirect to SSL.                                                                                                     |
+| `HTTPS_METHOD=noredirect` | Disable the non-SSL site entirely.                                                                                                     |
+| `HSTS=...`                | Customize the [Strict-Transport-Security](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security) header. |
+| `HSTS=off`                | Disable the [Strict-Transport-Security](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security) header.   |
+
 ## Credits
 
 Without the authors below this collection wouldn't be possible. Credits goes to:
 
-* [@jwilder](https://github.com/jwilder)
-* [@JrCs](https://github.com/JrCs)
+- [@jwilder](https://github.com/jwilder)
+- [@JrCs](https://github.com/JrCs)
