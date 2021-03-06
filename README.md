@@ -139,12 +139,29 @@ services:
 
 The following environment variables can be used for more advanced usage:
 
-| Variable                  | Description                                                                                                                            |
-| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| `HTTPS_METHOD=noredirect` | Disable the automatic redirect to the SSL site.                                                                                        |
-| `HTTPS_METHOD=nohttps`    | Disable the non-SSL site entirely.                                                                                                     |
-| `HSTS=...`                | Customize the [Strict-Transport-Security](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security) header. |
-| `HSTS=off`                | Disable the [Strict-Transport-Security](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security) header.   |
+| Variable                  | Description                                                                                                                                                     |
+| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `HTTPS_METHOD=noredirect` | Disable the automatic SSL redirect on the proxyed container.                                                                                                    |
+| `HTTPS_METHOD=nohttps`    | Disable the non-SSL site on the proxyed container (http only).                                                                                                  |
+| `HSTS=...`                | Customize the [Strict-Transport-Security](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security) header on the proxyed container. |
+| `HSTS=off`                | Disable the [Strict-Transport-Security](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security) header on the proxyed container.   |
+| `DEFAULT_HOST`            | Set the default NGINX host for `nginx-gen`.                                                                                                                     |
+
+#### Per-`VIRTUAL_HOST` NGINX conf
+
+To add NGINX conf options on a per-`VIRTUAL_HOST` basis: add your configuration file under `{NGINX_DATA_PATH}/vhost.d/{VIRTUAL_HOST}`.
+
+To add a NGINX conf *location* block on a per-`VIRTUAL_HOST` basis: add your configuration file under `{NGINX_DATA_PATH}/vhost.d/{VIRTUAL_HOST}_location`.
+
+#### `VIRTUAL_HOST` default conf
+
+If you want your `VIRTUAL_HOST`s to use some default NGINX conf options: add a configuration file under `{NGINX_DATA_PATH}/vhost.d/default`.
+
+If you want your `VIRTUAL_HOST`s to use some default NGINX conf *location* block: add your configuration file under `{NGINX_DATA_PATH}/vhost.d/default_location`.
+
+#### Basic Authentication Support
+
+In order to secure your `VIRTUAL_HOST` with basic auth: add a [`htpasswd`](https://httpd.apache.org/docs/2.2/programs/htpasswd.html) file under `{NGINX_DATA_PATH}/htpasswd/{VIRTUAL_HOST}`.
 
 ## Credits
 
