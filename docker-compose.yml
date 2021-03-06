@@ -33,6 +33,7 @@ services:
     restart: unless-stopped
     volumes:
       - ${DOCKER_SOCKET_PATH}:/var/run/docker.sock:ro
+      - ${NGINX_DATA_PATH}/acme.sh:/etc/acme.sh
       - ${NGINX_DATA_PATH}/certs:/etc/nginx/certs:rw
       - ${NGINX_DATA_PATH}/conf.d:/etc/nginx/conf.d
       - ${NGINX_DATA_PATH}/html:/usr/share/nginx/html

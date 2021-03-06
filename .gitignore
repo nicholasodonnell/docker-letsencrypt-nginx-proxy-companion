@@ -4,8 +4,11 @@ Thumbs.db
 
 # docker
 .env
+docker-compose.override.yml
 
 # nginx
+nginx-data/acme.sh/*
+!nginx-data/acme.sh/.gitkeep
 nginx-data/certs/*
 !nginx-data/certs/.gitkeep
 nginx-data/conf.d/*
