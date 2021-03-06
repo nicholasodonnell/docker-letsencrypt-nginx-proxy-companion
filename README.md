@@ -155,9 +155,9 @@ To add a NGINX conf *location* block on a per-`VIRTUAL_HOST` basis: add your con
 
 #### `VIRTUAL_HOST` default conf
 
-If you want your `VIRTUAL_HOST`s to use some default NGINX conf options: add a configuration file under `{NGINX_DATA_PATH}/vhost.d/default`.
+If you want your `VIRTUAL_HOST` to use some default NGINX conf options: add a configuration file under `{NGINX_DATA_PATH}/vhost.d/default`.
 
-If you want your `VIRTUAL_HOST`s to use some default NGINX conf *location* block: add your configuration file under `{NGINX_DATA_PATH}/vhost.d/default_location`.
+If you want your `VIRTUAL_HOST` to use some default NGINX conf *location* block: add your configuration file under `{NGINX_DATA_PATH}/vhost.d/default_location`.
 
 #### Basic Authentication Support
 
