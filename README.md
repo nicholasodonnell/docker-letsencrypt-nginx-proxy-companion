@@ -25,40 +25,16 @@ Before running this collection for the first time you must create the external n
 
 ## Usage
 
-To bring up the proxy:
+To start the collection:
 
 ```
 make up
 ```
 
-To bring down the proxy:
+To stop the collection:
 
 ```
 make down
-```
-
-To restart a service:
-
-```
-make restart service="<service>"
-```
-
-To restart NGINX (applies any changes with no downtime):
-
-```
-make restart-nginx
-```
-
-To stop a service:
-
-```
-make stop service="<service>"
-```
-
-To run a command against a running service:
-
-```
-make exec service="<service>" cmd="<command>"
 ```
 
 To view logs:
@@ -67,23 +43,22 @@ To view logs:
 make logs [service="<service>"] [file="/path/to/log/file"]
 ```
 
-To remove any images & containers (will require another `make pull`):
+To build docker images:
+
+```
+make build
+```
+
+To remove docker images:
 
 ```
 make clean
-```
-
-To list running services:
-
-```
-make ps
 ```
 
 ## ENV Options
 
 | Option                     | Description                                                                                                   |
 | -------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| `PROJECT_NAME`             | The docker compose project name.                                                                              |
 | `NGINX_DATA_PATH`          | NGINX files path. Here you can configure the path where NGINX stores all the configurations and certificates. |
 | `DOCKER_SOCKET_PATH`       | The host docker socket path.                                                                                  |
 | `EXTERNAL_NETWORK`         | Name of the external docker network for proxying.                                                             |
@@ -104,7 +79,7 @@ Once this collection is running, simply start a container you want proxyed with 
 > `VIRTUAL_HOST` controls proxying by nginx-web and `LETSENCRYPT_HOST` control certificate creation and SSL enabling by nginx-letsencrypt.
 > Certificates will only be issued for containers that have both `VIRTUAL_HOST` and `LETSENCRYPT_HOST` variables set to the domain(s) that correctly resolve to the host, provided the host is publicly reachable.
 
-If the proxyed container listen on and exposes another port other than the default `80`, you can force NGINX to use this port with the `VIRTUAL_PORT` environment variable.
+If this collectioned container listen on and exposes another port other than the default `80`, you can force NGINX to use this port with the `VIRTUAL_PORT` environment variable.
 
 #### Examples
 

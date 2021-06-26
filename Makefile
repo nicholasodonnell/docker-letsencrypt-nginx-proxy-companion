@@ -2,7 +2,7 @@ include .env
 
 SHELL := /bin/bash
 PROJECT_DIRECTORY := $(shell pwd)
-PROJECT_NAME := $(if $(PROJECT_NAME),$(PROJECT_NAME),docker-letsencrypt-nginx-proxy-companion)
+PROJECT_NAME := letsencrypt-nginx-proxy-companion
 
 define DOCKER_COMPOSE_ARGS
 	--log-level ERROR \
@@ -13,6 +13,12 @@ endef
 help: ## usage
 	@cat Makefile | grep -E '^[a-zA-Z_-]+:.*?## .*$$' | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
+build: ## build docker images
+	@docker-compose ${DOCKER_COMPOSE_ARGS} \
+		build \
+			--force-rm \
+			--pull
+
 clean: ## remove images & containers
 	@docker-compose ${DOCKER_COMPOSE_ARGS} \
 		down \
@@ -20,17 +26,11 @@ clean: ## remove images & containers
 			--rmi all \
 			--volumes
 
-down: ## bring down
+down: ## stop collection
 	@docker-compose ${DOCKER_COMPOSE_ARGS} \
 		down \
 			--remove-orphans \
 			--volumes
-
-exec: ## run a command against a running service
-	@docker-compose ${DOCKER_COMPOSE_ARGS} \
-		exec \
-			$(service) \
-				$(cmd)
 
 logs: ## view the logs of one or more running services
 ifndef file
@@ -49,54 +49,17 @@ endif
 network: ## create external network
 	docker network create $(EXTERNAL_NETWORK) $(EXTERNAL_NETWORK_OPTIONS)
 
-ps: ## lists running services
-	@docker ps \
-		--format {{.Names}}
-
-pull: ## pull images
-	@docker-compose ${DOCKER_COMPOSE_ARGS} \
-		pull \
-			--ignore-pull-failures
-
-restart: ## restart a service
-	@docker-compose ${DOCKER_COMPOSE_ARGS} \
-		restart \
-			$(service)
-
-restart-nginx: ## restart nginx
-	@docker-compose ${DOCKER_COMPOSE_ARGS} \
-		exec \
-			nginx-web \
-				nginx -s reload
-
-stop: ## stop a service
-	@docker-compose ${DOCKER_COMPOSE_ARGS} \
-		stop \
-			$(service)
-
-up: ## bring up
-ifndef service
+up: ## start collection
 	@docker-compose ${DOCKER_COMPOSE_ARGS} \
 		up \
 			--detach \
 			--remove-orphans
-else
-	@docker-compose ${DOCKER_COMPOSE_ARGS} \
-		up \
-			--detach \
-			--remove-orphans \
-			$(service)
-endif
 
 .PHONY: \
 	help \
+	build \
 	clean \
 	down \
-	exec \
 	logs \
-	ps \
-	pull \
-	restart \
-	restart-nginx \
-	stop \
+	network \
 	up
