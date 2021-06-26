@@ -17,6 +17,7 @@ build: ## build docker images
 	@docker-compose ${DOCKER_COMPOSE_ARGS} \
 		build \
 			--force-rm \
+			--parallel \
 			--pull
 
 clean: ## remove images & containers
