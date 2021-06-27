@@ -12,7 +12,6 @@ services:
     networks:
       - letsencrypt-nginx-proxy-companion
       - external-network
-    restart: unless-stopped
     volumes:
       - ${DOCKER_SOCKET_PATH}:/tmp/docker.sock:ro
       - ${NGINX_DATA_PATH}/certs:/etc/nginx/certs:ro
@@ -34,7 +33,6 @@ services:
     networks:
       - letsencrypt-nginx-proxy-companion
       - external-network
-    restart: unless-stopped
     volumes:
       - ${DOCKER_SOCKET_PATH}:/var/run/docker.sock:ro
       - ${NGINX_DATA_PATH}/acme.sh:/etc/acme.sh
@@ -54,7 +52,6 @@ services:
     ports:
       - ${NGINX_WEB_HTTP_PORT}:80
       - ${NGINX_WEB_HTTPS_PORT}:443
-    restart: unless-stopped
     volumes:
       - ${NGINX_DATA_PATH}/certs:/etc/nginx/certs:ro
       - ${NGINX_DATA_PATH}/conf.d:/etc/nginx/conf.d
