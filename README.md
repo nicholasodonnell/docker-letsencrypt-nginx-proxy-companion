@@ -17,7 +17,8 @@
 ## Installation
 
 1. Create a `.env` file using [`.env.example`](.env.example) as a reference: `cp -n .env{.example,}`.
-2. Pull the required docker images by running `make pull`.
+2. Create a `docker-compose.override.yml` file using [`docker-compose.override.example.yml`](docker-compose.override.example.yml) as a reference: `cp -n docker-compose.override{.example,}.yml`.
+3. Pull the required docker images by running `make pull`.
 
 ## Setup
 
@@ -83,31 +84,36 @@ If this collectioned container listen on and exposes another port other than the
 
 #### Examples
 
-```
+```bash
 docker run \
   --env "LETSENCRYPT_HOST=subdomain.yourdomain.tld" \
   --env "VIRTUAL_HOST=subdomain.yourdomain.tld" \
-  --env "VIRTUAL_PORT=8080" \
-  --expose=8080 \
-  --name your-proxyed-app \
+  --env "VIRTUAL_PORT=80" \
+  --expose=80 \
+  --name app \
   --network=webproxy \
-  node
+  nginx
 ```
 
-```
+```yml
 version: "3.5"
 services:
-  your-proxyed-app:
-    container_name: your-proxyed-app
+  app:
+    container_name: app
     environment:
       - LETSENCRYPT_HOST=subdomain.yourdomain.tld
       - VIRTUAL_HOST=subdomain.yourdomain.tld
-      - VIRTUAL_PORT=8080
+      - VIRTUAL_PORT=80
     expose:
-      - 8080
-    image: node
+      - 80
+    image: nginx
     networks:
       - webproxy
+
+networks:
+  webproxy:
+    external:
+      name: webproxy
 ```
 
 ## Advanced Usage
